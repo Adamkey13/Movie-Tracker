@@ -1,0 +1,101 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.72);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  backdrop-filter: blur(4px) brightness(0.75);
+}
+
+.modal {
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--card-color);
+  border: 1px solid var(--outline-color);
+  border-radius: 28px;
+  padding: 1.3rem;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 2rem;
+  background: transparent;
+  /* border: 1px solid var(--outline-color); */
+  color: var(--text-color);
+}
+
+.entry-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.entry-form label:has(textarea),
+.entry-form label:nth-last-child(2),
+.image-preview {
+  grid-column: 1 / -1;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid var(--outline-color);
+}
+
+.modal-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+}
+
+@media (max-width: 700px) {
+  .entry-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+  right: 100px;
+  border-radius: 10px;
+}
+
+.modal::-webkit-scrollbar-track {
+  margin-block: 15px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 999px;
+}
+
+.rating-input {
+  width: 100%;
+  border: 0% solid green;
+  background: transparent;
+  padding: 0%;
+  color: var(--text-color);
+  accent-color: var(--accent-color);
+}
