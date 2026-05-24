@@ -4,7 +4,7 @@ import "../styles/EntryCard.css";
 type EntryCardProps = {
   entry: WatchEntry;
   onEdit: (entry: WatchEntry) => void;
-  onDelete: (id: string) => void;
+  onDelete: (entry: WatchEntry) => void;
 };
 
 function formatStatus(status: WatchEntry["status"]) {
@@ -53,7 +53,7 @@ export function EntryCard({ entry, onEdit, onDelete }: EntryCardProps) {
 
         <div className="entry-actions">
           <button onClick={() => onEdit(entry)}>Edit</button>
-          <button className="danger-button" onClick={() => onDelete(entry.id)}>
+          <button className="danger-button" onClick={() => onDelete(entry)}>
             Delete
           </button>
         </div>

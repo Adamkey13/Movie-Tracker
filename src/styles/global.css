@@ -42,9 +42,7 @@
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-color) 20%, transparent), transparent 35%),
-    var(--bg-color);
+  background: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
 }

@@ -4,6 +4,7 @@ import { getEntries, logoutUser, saveEntries } from "../utils/storage";
 import { EntryTabs } from "./EntryTabs";
 import { EntryList } from "./EntryList";
 import { EntryModal } from "./EntryModal";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import "../styles/MainScreen.css";
 
 type MainScreenProps = {
@@ -16,6 +17,7 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
   const [entries, setEntries] = useState<WatchEntry[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<WatchEntry | null>(null);
+  const [entryToDelete, setEntryToDelete] = useState<WatchEntry | null>(null);
 
   useEffect(() => {
     setEntries(getEntries(username));
@@ -47,8 +49,15 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
     setModalOpen(false);
   }
 
-  function handleDeleteEntry(id: string) {
-    setEntries((prev) => prev.filter((entry) => entry.id !== id));
+  function askDeleteEntry(entry: WatchEntry) {
+    setEntryToDelete(entry);
+  }
+
+  function confirmDeleteEntry() {
+    if (!entryToDelete) return;
+
+    setEntries((prev) => prev.filter((entry) => entry.id !== entryToDelete.id));
+    setEntryToDelete(null);
   }
 
   function handleEditEntry(entry: WatchEntry) {
@@ -96,7 +105,7 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
       <EntryList
         entries={filteredEntries}
         onEdit={handleEditEntry}
-        onDelete={handleDeleteEntry}
+        onDelete={askDeleteEntry}
       />
 
       {modalOpen && (
@@ -108,6 +117,14 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
             setModalOpen(false);
           }}
           onSave={handleSaveEntry}
+        />
+      )}
+
+      {entryToDelete && (
+        <ConfirmDeleteModal
+          entryName={entryToDelete.name}
+          onCancel={() => setEntryToDelete(null)}
+          onConfirm={confirmDeleteEntry}
         />
       )}
     </main>

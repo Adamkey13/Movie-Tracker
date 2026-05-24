@@ -9,6 +9,7 @@ import {
 import { Login } from "./components/Login";
 import { MainScreen } from "./components/MainScreen";
 import { TopMenu } from "./components/TopMenu";
+import { DynamicBackground } from "./components/DynamicBackground";
 
 export default function App() {
   const savedUser = getCurrentUser();
@@ -36,7 +37,7 @@ export default function App() {
 
   return (
     <div className="app">
-
+      <DynamicBackground />
 
       {!currentUser ? (
         <Login onLoginSuccess={handleLoginSuccess} />

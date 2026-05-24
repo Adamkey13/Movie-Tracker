@@ -4,7 +4,7 @@ import { EntryCard } from "./EntryCard";
 type EntryListProps = {
   entries: WatchEntry[];
   onEdit: (entry: WatchEntry) => void;
-  onDelete: (id: string) => void;
+  onDelete: (entry: WatchEntry) => void;
 };
 
 export function EntryList({ entries, onEdit, onDelete }: EntryListProps) {
