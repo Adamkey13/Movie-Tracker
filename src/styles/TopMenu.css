@@ -10,7 +10,7 @@
   height: 44px;
   padding: 0;
   font-size: 1.2rem;
-  border: 1px solid var(--outline-color);
+  border: 0px solid var(--outline-color);
 }
 
 .top-menu {

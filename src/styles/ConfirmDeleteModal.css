@@ -31,7 +31,7 @@
 }
 
 .confirm-warning {
-  color: var(--accent-color) !important;
+  color: red !important;
   font-weight: 700;
 }
 
