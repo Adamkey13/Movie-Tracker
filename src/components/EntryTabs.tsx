@@ -14,19 +14,27 @@ export function EntryTabs({
   seriesCount,
 }: EntryTabsProps) {
   return (
-    <div className="tabs">
+    <div className="flex rounded-full border border-[var(--outline-color)] bg-[var(--card-color)] p-1 shadow-lg">
       <button
-        className={activeTab === "movie" ? "tab active" : "tab"}
+        className={
+          activeTab === "movie"
+            ? "rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
+            : "rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+        }
         onClick={() => onTabChange("movie")}
       >
-        Movies <span>{movieCount}</span>
+        Movies{" "}
       </button>
 
       <button
-        className={activeTab === "series" ? "tab active" : "tab"}
+        className={
+          activeTab === "series"
+            ? "rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
+            : "rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+        }
         onClick={() => onTabChange("series")}
       >
-        Series <span>{seriesCount}</span>
+        Series{" "}
       </button>
     </div>
   );
