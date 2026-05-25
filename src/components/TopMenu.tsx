@@ -27,7 +27,7 @@ export function TopMenu({ theme, onThemeChange }: TopMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-14 grid w-64 gap-4 rounded-[22px] border border-[var(--outline-color)] bg-[var(--card-color)] p-4 text-[var(--text-color)] shadow-2xl">
+        <div className="absolute right-0 top-14 grid w-64 gap-4 rounded-[22px] border border-[var(--outline-color)] bg-[var(--card-color)] p-4 text-[var(--text-color)] shadow-2xl pt-6 pb-7">
           <h3 className="m-0 text-lg font-bold">Customize</h3>
 
           <label className="grid gap-2 text-sm text-[var(--muted-color)]">

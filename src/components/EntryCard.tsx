@@ -20,7 +20,7 @@ function getRatingColor(rating: number) {
 
 export function EntryCard({ entry, onEdit, onDelete }: EntryCardProps) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_92%,transparent)] shadow-2xl backdrop-blur transition hover:-translate-y-1">
+    <article className="flex h-full flex-col overflow-hidden rounded-[28px] drop-shadow-lg border-[0px] border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_92%,transparent)] shadow-2xl backdrop-blur transition hover:-translate-y-1 hover:shadow-[0_10px_15px_-3px_rgb(0,0,0,0.3),0_4px_6px_-2px_rgb(0,0,0,0.2)] hover:border-x-[1px]">
       <div className="h-[250px] bg-white/5">
         {entry.picture ? (
           <img
