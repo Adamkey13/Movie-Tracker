@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import type { ThemeMode, ThemeSettings } from "../types";
+import { defaultTheme } from "../services/themeService";
 
 type TopMenuProps = {
   theme: ThemeSettings;
@@ -15,6 +16,15 @@ export function TopMenu({ theme, onThemeChange }: TopMenuProps) {
 
   function updateColor(key: keyof ThemeSettings, value: string) {
     onThemeChange({ ...theme, [key]: value });
+  }
+
+  function resetColors() {
+    onThemeChange({
+      ...theme,
+      accentColor: defaultTheme.accentColor,
+      buttonColor: defaultTheme.buttonColor,
+      outlineColor: defaultTheme.outlineColor,
+    });
   }
 
   return (
@@ -47,9 +57,9 @@ export function TopMenu({ theme, onThemeChange }: TopMenuProps) {
 
           <label className="grid gap-2 text-sm text-[var(--muted-color)]">
             Accent color
-            <button className="h-10 w-[100%] bg-[var(--accent-color)] rounded-full">
+            <button className="relative h-10 w-full bg-[var(--accent-color)] rounded-full">
               <input
-                className="h-11 opacity-0"
+                className="absolute inset-0 h-11 w-full cursor-pointer opacity-0"
                 type="color"
                 value={theme.accentColor}
                 onInput={(e) =>
@@ -61,23 +71,23 @@ export function TopMenu({ theme, onThemeChange }: TopMenuProps) {
 
           <label className="grid gap-2 text-sm text-[var(--muted-color)]">
             Button color
-            <button className="h-10 w-[100%] bg-[var(--button-color)] rounded-full">
-            <input
-              className="h-11 opacity-0"
-              type="color"
-              value={theme.buttonColor}
-              onInput={(e) =>
-                updateColor("buttonColor", (e.target as HTMLInputElement).value)
-              }
-            />
+            <button className="relative h-10 w-full bg-[var(--button-color)] rounded-full">
+              <input
+                className="absolute inset-0 h-11 w-full cursor-pointer opacity-0"
+                type="color"
+                value={theme.buttonColor}
+                onInput={(e) =>
+                  updateColor("buttonColor", (e.target as HTMLInputElement).value)
+                }
+              />
             </button>
           </label>
 
           <label className="grid gap-2 text-sm text-[var(--muted-color)]">
             Outline color
-            <button className="h-10 w-[100%] bg-[var(--outline-color)] rounded-full">
+            <button className="relative h-10 w-full bg-[var(--outline-color)] rounded-full">
               <input
-                className="h-11 opacity-0"
+                className="absolute inset-0 h-[100%] w-full cursor-pointer opacity-0"
                 type="color"
                 value={theme.outlineColor}
                 onInput={(e) =>
@@ -86,6 +96,13 @@ export function TopMenu({ theme, onThemeChange }: TopMenuProps) {
               />
             </button>
           </label>
+
+          <button
+            className="rounded-full border border-[var(--outline-color)] bg-transparent px-4 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+            onClick={resetColors}
+          >
+            Reset colors
+          </button>
         </div>
       )}
     </div>

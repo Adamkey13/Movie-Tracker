@@ -4,9 +4,9 @@ import type { ThemeSettings } from "../types";
 
 export const defaultTheme: ThemeSettings = {
   mode: "dark",
-  accentColor: "#ffdc52",
-  buttonColor: "#fbd86e",
-  outlineColor: "#ffdc40",
+  accentColor: "#386641",
+  buttonColor: "#6a994e",
+  outlineColor: "#a7c957",
 };
 
 export async function getCloudTheme(uid: string): Promise<ThemeSettings> {
