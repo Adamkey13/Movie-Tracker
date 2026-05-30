@@ -15,7 +15,7 @@
 }
 
 :root[data-theme="light"] {
-  --bg-color: #f4f4f5;
+  --bg-color: #d6d6d6;
   --card-color: #ffffff;
   --text-color: #18181b;
   --muted-color: #666666;

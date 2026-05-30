@@ -50,8 +50,8 @@ export function Login() {
         </h1>
 
         <p className="mt-4 leading-7 text-[var(--muted-color)]">
-          Save movies and series, write reviews, rate them, and continue exactly
-          where you left off.
+          Save movies and series, write reviews, rate them, and know
+          where you left off exactly.
         </p>
 
         <div className="mt-7 grid gap-4">
