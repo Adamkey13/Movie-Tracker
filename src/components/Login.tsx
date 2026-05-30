@@ -92,7 +92,7 @@ export function Login() {
           />
 
           {message && (
-            <p className="m-0 font-bold text-[var(--accent-color)]">{message}</p>
+            <p className="m-0 text-center font-bold text-[red]">{message}</p>
           )}
 
           {!registering ? (
