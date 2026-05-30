@@ -13,9 +13,9 @@ function getThemeKey(username: string) {
 
 export const defaultTheme: ThemeSettings = {
   mode: "dark",
-  accentColor: "#f5c542",
-  buttonColor: "#e63946",
-  outlineColor: "#f5c542",
+  accentColor: "#fee789",
+  buttonColor: "#fbd86e",
+  outlineColor: "#ffdc7c",
 };
 
 export function getUsers(): User[] {
