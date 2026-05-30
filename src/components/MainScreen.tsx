@@ -1,18 +1,23 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
-import { EntryFilters } from "./EntryFilters";
+import type { User as FirebaseUser } from "firebase/auth";
 import type { MediaType, WatchEntry, WatchStatus } from "../types";
-import { getEntries, logoutUser, saveEntries } from "../utils/storage";
+import {
+  deleteCloudEntry,
+  getCloudEntries,
+  saveCloudEntry,
+} from "../services/entryService";
+import { logoutFirebaseUser } from "../services/authService";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
+import { EntryFilters } from "./EntryFilters";
 import { EntryList } from "./EntryList";
 import { EntryModal } from "./EntryModal";
 import { EntryTabs } from "./EntryTabs";
 
 type MainScreenProps = {
-  username: string;
-  onLogout: () => void;
+  user: FirebaseUser;
 };
 
-export function MainScreen({ username, onLogout }: MainScreenProps) {
+export function MainScreen({ user }: MainScreenProps) {
   const [activeTab, setActiveTab] = useState<MediaType>("movie");
   const [entries, setEntries] = useState<WatchEntry[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,12 +30,15 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
   const [selectedWhereToWatch, setSelectedWhereToWatch] = useState("all");
 
   useEffect(() => {
-    setEntries(getEntries(username));
-  }, [username]);
+    async function loadEntries() {
+      const cloudEntries = await getCloudEntries(user.uid);
+      setEntries(cloudEntries);
+    }
 
-  useEffect(() => {
-    saveEntries(username, entries);
-  }, [entries, username]);
+    loadEntries();
+  }, [user.uid]);
+
+
 
   useEffect(() => {
     clearFilters();
@@ -96,7 +104,9 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
   const movieCount = entries.filter((entry) => entry.type === "movie").length;
   const seriesCount = entries.filter((entry) => entry.type === "series").length;
 
-  function handleSaveEntry(entry: WatchEntry) {
+  async function handleSaveEntry(entry: WatchEntry) {
+    await saveCloudEntry(user.uid, entry);
+
     setEntries((prev) => {
       const exists = prev.some((item) => item.id === entry.id);
 
@@ -111,8 +121,10 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
     setModalOpen(false);
   }
 
-  function confirmDeleteEntry() {
+  async function confirmDeleteEntry() {
     if (!entryToDelete) return;
+
+    await deleteCloudEntry(user.uid, entryToDelete.id);
 
     setEntries((prev) => prev.filter((entry) => entry.id !== entryToDelete.id));
     setEntryToDelete(null);
@@ -130,9 +142,8 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
     setSelectedWhereToWatch("all");
   }
 
-  function handleLogout() {
-    logoutUser();
-    onLogout();
+  async function handleLogout() {
+    await logoutFirebaseUser();
   }
 
   return (
@@ -140,7 +151,7 @@ export function MainScreen({ username, onLogout }: MainScreenProps) {
       <header className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
         <div>
           <p className="m-0 font-black text-[var(--text-color)] opacity-80">
-            Welcome back, {username}
+            Welcome back, {user.displayName ?? user.email?.split("@")[0] ?? "user"}
           </p>
 
           <h1 className="m-0 mt-1 text-4xl font-black leading-tight sm:text-6xl">

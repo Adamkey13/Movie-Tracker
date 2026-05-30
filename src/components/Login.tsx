@@ -1,47 +1,41 @@
 import { useRef, useState } from "preact/hooks";
 import { loginUser, registerUser } from "../utils/storage";
+import { loginWithEmail, registerWithEmail } from "../services/authService";
 
-type LoginProps = {
-  onLoginSuccess: (username: string) => void;
-};
 
-export function Login({ onLoginSuccess }: LoginProps) {
-  const [username, setUsername] = useState("");
+export function Login() {
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [registering, setRegistering] = useState(false);
 
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  function handleLogin() {
-    if (!username.trim() || !password.trim()) {
+  async function handleLogin() {
+    if (!email.trim() || !password.trim()) {
       setMessage("Please fill in both fields.");
       return;
     }
 
-    const result = loginUser(username.trim(), password);
-
-    if (!result.success || !result.username) {
-      setMessage(result.message);
-      return;
+    try {
+      await loginWithEmail(email.trim(), password);
+    } catch {
+      setMessage("Wrong email or password.");
     }
-
-    onLoginSuccess(result.username);
   }
 
-  function handleRegister() {
-    if (!username.trim() || !password.trim()) {
-      setMessage("Please fill in both fields.");
+  async function handleRegister() {
+    if (!displayName.trim() || !email.trim() || !password.trim()) {
+      setMessage("Please fill in every field.");
       return;
     }
 
-    const result = registerUser(username.trim(), password);
-
-    if (!result.success || !result.username) {
-      setMessage(result.message);
-      return;
+    try {
+      await registerWithEmail(email.trim(), password, displayName.trim());
+    } catch {
+      setMessage("Could not create account. Maybe this email is already used.");
     }
-
-    onLoginSuccess(result.username);
   }
 
   return (
@@ -61,12 +55,21 @@ export function Login({ onLoginSuccess }: LoginProps) {
         </p>
 
         <div className="mt-7 grid gap-4">
+          {registering && (
           <input
             className="rounded-2xl border border-[var(--outline-color)] bg-[var(--input-color)] p-4 text-[var(--text-color)] outline-none transition focus:ring-2 focus:ring-[var(--accent-color)]"
             type="text"
-            placeholder="Username"
-            value={username}
-            onInput={(e) => setUsername((e.target as HTMLInputElement).value)}
+            placeholder="Display Name"
+            value={displayName}
+            onInput={(e) => setDisplayName((e.target as HTMLInputElement).value)}
+          />)}
+
+          <input
+            className="rounded-2xl border border-[var(--outline-color)] bg-[var(--input-color)] p-4 text-[var(--text-color)] outline-none transition focus:ring-2 focus:ring-[var(--accent-color)]"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 passwordInputRef.current?.focus();
@@ -92,19 +95,46 @@ export function Login({ onLoginSuccess }: LoginProps) {
             <p className="m-0 font-bold text-[var(--accent-color)]">{message}</p>
           )}
 
-          <button
-            className="rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
-            onClick={handleLogin}
-          >
-            Login
-          </button>
+          {!registering ? (
+            <button
+              className="rounded-full border border-[var(--outline-color)] bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
+          ) : null}
 
-          <button
-            className="rounded-full border border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
-            onClick={handleRegister}
-          >
-            Create account
-          </button>
+          {registering && (
+            <button
+              className="rounded-full border border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+              onClick={handleRegister}
+            >
+              Create account
+            </button>
+          )}
+
+          {registering ? (
+            <p className="m-0 mt-4 text-center text-sm text-[var(--muted-color)]">
+              Already have an account?{" "}
+              <button
+                className="font-bold text-[var(--accent-color)] underline"
+                onClick={() => setRegistering(false)}
+              >
+                Login here.
+              </button>
+            </p>
+          ) : (
+            <p className="m-0 mt-4 text-center text-sm text-[var(--muted-color)]">
+              Don't have an account?{" "}
+              <button
+                className="font-bold text-[var(--accent-color)] underline"
+                onClick={() => setRegistering(true)}
+              >
+                Create one here.
+              </button>
+            </p>
+          )}
+
         </div>
       </section>
     </main>

@@ -1,21 +1,39 @@
 import { useEffect, useState } from "preact/hooks";
+import type { User } from "firebase/auth";
 import type { ThemeSettings } from "./types";
-import {
-  defaultTheme,
-  getCurrentUser,
-  getTheme,
-  saveTheme,
-} from "./utils/storage";
+import { listenToAuthChanges } from "./services/authService";
+import { defaultTheme, getCloudTheme, saveCloudTheme } from "./services/themeService";
 import { Login } from "./components/Login";
 import { MainScreen } from "./components/MainScreen";
 import { TopMenu } from "./components/TopMenu";
 import { DynamicBackground } from "./components/DynamicBackground";
 
 export default function App() {
-  const savedUser = getCurrentUser();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [theme, setTheme] = useState<ThemeSettings>(defaultTheme);
 
-  const [currentUser, setCurrentUser] = useState<string | null>(savedUser);
-  const [theme, setTheme] = useState<ThemeSettings>(getTheme(savedUser));
+  useEffect(() => {
+    const unsubscribe = listenToAuthChanges(async (user) => {
+      try {
+        setCurrentUser(user);
+
+        if (user) {
+          const savedTheme = await getCloudTheme(user.uid);
+          setTheme(savedTheme);
+        } else {
+          setTheme(defaultTheme);
+        }
+      } catch (error) {
+        console.error("Auth/theme loading error:", error);
+        setTheme(defaultTheme);
+      } finally {
+        setAuthLoading(false);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme.mode);
@@ -23,16 +41,13 @@ export default function App() {
     document.documentElement.style.setProperty("--button-color", theme.buttonColor);
     document.documentElement.style.setProperty("--outline-color", theme.outlineColor);
 
-    saveTheme(currentUser, theme);
+    if (currentUser) {
+      saveCloudTheme(currentUser.uid, theme);
+    }
   }, [theme, currentUser]);
 
-  function handleLoginSuccess(username: string) {
-    setCurrentUser(username);
-    setTheme(getTheme(username));
-  }
-
-  function handleLogout() {
-    setCurrentUser(null);
+  if (authLoading) {
+    return <div className="app">Loading...</div>;
   }
 
   return (
@@ -40,13 +55,12 @@ export default function App() {
       <DynamicBackground />
 
       {!currentUser ? (
-        <Login onLoginSuccess={handleLoginSuccess} />
+        <Login />
       ) : (
         <div>
           <TopMenu theme={theme} onThemeChange={setTheme} />
-          <MainScreen username={currentUser} onLogout={handleLogout} />
+          <MainScreen user={currentUser} />
         </div>
-
       )}
     </div>
   );
