@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import type { MediaType, WatchEntry, WatchStatus } from "../types";
+import { ModalSelect } from "./ModalSelect";
 
 type EntryModalProps = {
   defaultType: MediaType;
@@ -7,6 +8,12 @@ type EntryModalProps = {
   onClose: () => void;
   onSave: (entry: WatchEntry) => void;
 };
+
+function getRatingColor(rating: number) {
+  if (rating >= 8) return "text-green-400";
+  if (rating >= 5) return "text-yellow-400";
+  return "text-red-400";
+}
 
 export function EntryModal({
   defaultType,
@@ -37,6 +44,17 @@ export function EntryModal({
   const [whereToWatch, setWhereToWatch] = useState(
     existingEntry?.whereToWatch ?? ""
   );
+
+  const typeOptions: { value: MediaType; label: string }[] = [
+    { value: "movie", label: "Movie" },
+    { value: "series", label: "Series" },
+  ];
+
+  const statusOptions: { value: WatchStatus; label: string }[] = [
+    { value: "want-to-watch", label: "Want to watch" },
+    { value: "watching", label: "Watching" },
+    { value: "watched", label: "Watched" },
+  ];
 
   function handleImageUpload(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -89,18 +107,18 @@ export function EntryModal({
   const labelClass = "grid gap-2 text-sm font-medium text-[var(--muted-color)]";
 
   return (
-    <div className="fixed inset-0 z-[100] grid place-items-center bg-black/75 p-4">
-      <div className="max-h-[90vh] w-full max-w-[760px] overflow-y-auto rounded-[30px] border border-[var(--outline-color)] bg-[var(--card-color)] p-5 text-[var(--text-color)] shadow-2xl [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[var(--accent-color)]">
+    <div className="fixed inset-0 z-[100] grid place-items-center bg-black/75 p-4 backdrop-blur">
+      <div className="modal-scroll max-h-[90vh] w-full max-w-[760px] overflow-y-auto rounded-[30px] border border-[var(--outline-color)] bg-[var(--card-color)] p-6 pt-10 pb-10 text-[var(--text-color)] shadow-2xl">
         <div className="mb-5 flex items-center justify-between gap-4">
           <h2 className="m-0 text-2xl font-black">
             {existingEntry ? "Edit entry" : "Add new entry"}
           </h2>
 
           <button
-            className="grid h-11 w-11 place-items-center rounded-full border border-[var(--outline-color)] bg-transparent text-2xl font-bold text-[var(--text-color)] transition hover:-translate-y-0.5"
+            className="grid h-11 w-11 place-items-center rounded-full border border-[var(--outline-color)] bg-transparent text-2xl font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
             onClick={onClose}
           >
-            ×
+            <span className="block h-8.5 w-5">×</span>
           </button>
         </div>
 
@@ -108,19 +126,12 @@ export function EntryModal({
           className="grid grid-cols-1 gap-4 md:grid-cols-2"
           onSubmit={handleSubmit}
         >
-          <label className={labelClass}>
-            Type
-            <select
-              className={inputClass}
-              value={type}
-              onInput={(e) =>
-                setType((e.target as HTMLSelectElement).value as MediaType)
-              }
-            >
-              <option value="movie">Movie</option>
-              <option value="series">Series</option>
-            </select>
-          </label>
+          <ModalSelect
+            label="Type"
+            value={type}
+            options={typeOptions}
+            onChange={setType}
+          />
 
           <label className={labelClass}>
             Name
@@ -147,7 +158,7 @@ export function EntryModal({
           <label className={`${labelClass} md:col-span-2`}>
             Or upload picture
             <input
-              className={inputClass}
+              className={inputClass + " cursor-pointer"}
               type="file"
               accept="image/*"
               onInput={handleImageUpload}
@@ -163,17 +174,31 @@ export function EntryModal({
           )}
 
           <label className={labelClass}>
-            Rating: {rating}/10
+            <div className="flex items-center justify-between">
+              <span>Rating</span>
+
+              <span className={`rounded-full bg-[color-mix(in_srgb,var(--accent-color)_18%,transparent)] px-3 py-1 text-sm font-black ${getRatingColor(rating)}`}>
+                ★ {rating}/10
+              </span>
+            </div>
+
             <input
-              className={inputClass}
+              className="rating-slider"
               type="range"
               min="0"
               max="10"
               value={rating}
+              style={{ "--rating-percent": `${rating * 10}%` } as any}
               onInput={(e) =>
                 setRating(Number((e.target as HTMLInputElement).value))
               }
             />
+
+            <div className="flex justify-between px-1 text-xs text-[var(--muted-color)]">
+              <span>0</span>
+              <span>5</span>
+              <span>10</span>
+            </div>
           </label>
 
           <label className={labelClass}>
@@ -187,20 +212,12 @@ export function EntryModal({
             />
           </label>
 
-          <label className={labelClass}>
-            Status
-            <select
-              className={inputClass}
-              value={status}
-              onInput={(e) =>
-                setStatus((e.target as HTMLSelectElement).value as WatchStatus)
-              }
-            >
-              <option value="want-to-watch">Want to watch</option>
-              <option value="watching">Watching</option>
-              <option value="watched">Watched</option>
-            </select>
-          </label>
+          <ModalSelect
+            label="Status"
+            value={status}
+            options={statusOptions}
+            onChange={setStatus}
+          />
 
           <label className={labelClass}>
             Progress
@@ -217,7 +234,7 @@ export function EntryModal({
             />
           </label>
 
-          <label className={`${labelClass} md:col-span-2`}>
+          <label className={`${labelClass} md:col-span-1`}>
             Where can you watch it?
             <input
               className={inputClass}
