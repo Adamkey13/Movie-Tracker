@@ -14,7 +14,7 @@ export function EntryTabs({
   seriesCount,
 }: EntryTabsProps) {
   return (
-    <div className="flex rounded-full border border-[var(--outline-color)] bg-[var(--card-color)] p-1 shadow-lg">
+    <div className="flex rounded-full border-2 border-[var(--outline-color)] bg-[var(--card-color)] p-1 shadow-lg">
       <button
         className={
           activeTab === "movie"

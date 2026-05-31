@@ -32,7 +32,7 @@ export function EntryFilters({
   onClearFilters,
 }: EntryFiltersProps) {
   return (
-    <section className="relative z-30 mb-6 grid gap-4 rounded-[28px] border border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_88%,transparent)] p-5 shadow-xl backdrop-blur md:grid-cols-2 lg:grid-cols-5">
+    <section className="relative z-30 mb-6 grid gap-4 rounded-[28px] border-2 border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_88%,transparent)] p-5 shadow-xl backdrop-blur md:grid-cols-2 lg:grid-cols-5">
       <label className="grid gap-2 text-sm font-bold text-[var(--muted-color)]">
         Search by title
         <input
@@ -71,7 +71,7 @@ export function EntryFilters({
         <span className="invisible">Actions</span>
 
         <button
-          className="cursor-pointer h-14 w-full rounded-full border border-[var(--outline-color)] bg-transparent px-5 font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+          className="cursor-pointer h-14 w-full rounded-full border-2 border-[var(--outline-color)] bg-transparent px-5 font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
           onClick={onClearFilters}
         >
           Clear filters

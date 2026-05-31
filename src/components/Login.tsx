@@ -40,7 +40,7 @@ export function Login() {
 
   return (
     <main className="grid min-h-screen place-items-center px-5 py-10">
-      <section className="w-full max-w-[460px] rounded-[32px] border border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_92%,transparent)] p-8 text-[var(--text-color)] shadow-2xl backdrop-blur-md">
+      <section className="w-full max-w-[460px] rounded-[32px] border-2 border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--card-color)_92%,transparent)] p-8 text-[var(--text-color)] shadow-2xl backdrop-blur-md">
         <p className="m-0 text-sm font-black uppercase tracking-[0.18em] text-[var(--accent-color)]">
           Movie Journal
         </p>
@@ -106,7 +106,7 @@ export function Login() {
 
           {registering && (
             <button
-              className="cursor-pointer rounded-full border border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+              className="cursor-pointer rounded-full border-2 border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
               onClick={handleRegister}
             >
               Create account

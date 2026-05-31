@@ -115,7 +115,7 @@ export function EntryModal({
           </h2>
 
           <button
-            className="grid h-11 w-11 place-items-center rounded-full border border-[var(--outline-color)] bg-transparent text-2xl font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+            className="grid h-11 w-11 place-items-center rounded-full border-2 border-[var(--outline-color)] bg-transparent text-2xl font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
             onClick={onClose}
           >
             <span className="block h-8.5 w-5">×</span>
