@@ -97,7 +97,7 @@ export function Login() {
 
           {!registering ? (
             <button
-              className="rounded-full border border-[var(--outline-color)] bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
+              className="cursor-pointer rounded-full border border-[var(--outline-color)] bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
               onClick={handleLogin}
             >
               Login
@@ -106,7 +106,7 @@ export function Login() {
 
           {registering && (
             <button
-              className="rounded-full border border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+              className="cursor-pointer rounded-full border border-[var(--outline-color)] bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
               onClick={handleRegister}
             >
               Create account
@@ -117,7 +117,7 @@ export function Login() {
             <p className="m-0 mt-4 text-center text-sm text-[var(--muted-color)]">
               Already have an account?{" "}
               <button
-                className="font-bold text-[var(--accent-color)] underline"
+                className="cursor-pointerfont-bold text-[var(--outline-color)] underline"
                 onClick={() => setRegistering(false)}
               >
                 Login here.
@@ -127,7 +127,7 @@ export function Login() {
             <p className="m-0 mt-4 text-center text-sm text-[var(--muted-color)]">
               Don't have an account?{" "}
               <button
-                className="font-bold text-[var(--accent-color)] underline"
+                className="cursor-pointer font-bold text-[var(--outline-color)] underline"
                 onClick={() => setRegistering(true)}
               >
                 Create one here.

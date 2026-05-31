@@ -74,14 +74,14 @@ export function EntryCard({ entry, onEdit, onDelete }: EntryCardProps) {
 
         <div className="mt-auto flex gap-3 pt-5">
           <button
-            className="flex-1 rounded-full bg-[var(--button-color)] px-4 py-3 font-black text-white transition hover:-translate-y-0.5 hover:brightness-110"
+            className="cursor-pointer flex-1 rounded-full bg-[var(--button-color)] px-4 py-3 font-black text-white transition hover:-translate-y-0.5 hover:brightness-110"
             onClick={() => onEdit(entry)}
           >
             Edit
           </button>
 
           <button
-            className="flex-1 rounded-full bg-red-700 px-4 py-3 font-black text-white transition hover:-translate-y-0.5 hover:brightness-110"
+            className="cursor-pointer flex-1 rounded-full bg-red-700 px-4 py-3 font-black text-white transition hover:-translate-y-0.5 hover:brightness-110"
             onClick={() => onDelete(entry)}
           >
             Delete

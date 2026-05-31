@@ -71,7 +71,7 @@ export function EntryFilters({
         <span className="invisible">Actions</span>
 
         <button
-          className="h-14 w-full rounded-full border border-[var(--outline-color)] bg-transparent px-5 font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+          className="cursor-pointer h-14 w-full rounded-full border border-[var(--outline-color)] bg-transparent px-5 font-bold text-[var(--text-color)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
           onClick={onClearFilters}
         >
           Clear filters

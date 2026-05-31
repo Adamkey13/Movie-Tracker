@@ -160,7 +160,7 @@ export function MainScreen({ user }: MainScreenProps) {
         </div>
 
         <button
-          className="w-fit rounded-full border-[3px] border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--button-color)_25%,transparent)] px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_30%,transparent)]"
+          className="cursor-pointer w-fit rounded-full border-[3px] border-[var(--outline-color)] bg-[color-mix(in_srgb,var(--button-color)_25%,transparent)] px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--outline-color)_30%,transparent)]"
           onClick={handleLogout}
         >
           Logout
@@ -176,7 +176,7 @@ export function MainScreen({ user }: MainScreenProps) {
         />
 
         <button
-          className="rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
+          className="cursor-pointer rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white shadow-lg transition hover:-translate-y-0.5 hover:brightness-110"
           onClick={() => {
             setEditingEntry(null);
             setModalOpen(true);

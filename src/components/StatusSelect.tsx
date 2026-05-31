@@ -81,7 +81,7 @@ export function StatusSelect({ value, onChange }: StatusSelectProps) {
 
       <button
         type="button"
-        className="relative h-14 w-full rounded-2xl border border-[var(--outline-color)] bg-[var(--input-color)] px-5 pr-16 text-left font-semibold text-[var(--text-color)] outline-none transition hover:bg-[color-mix(in_srgb,var(--outline-color)_12%,transparent)] focus:ring-2 focus:ring-[var(--accent-color)]"
+        className="cursor-pointer relative h-14 w-full rounded-2xl border border-[var(--outline-color)] bg-[var(--input-color)] px-5 pr-16 text-left font-semibold text-[var(--text-color)] outline-none transition hover:bg-[color-mix(in_srgb,var(--outline-color)_12%,transparent)] focus:ring-2 focus:ring-[var(--accent-color)]"
         onClick={() => setOpen(!open)}
       >
         <span>{selectedOption.label}</span>

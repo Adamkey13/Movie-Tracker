@@ -18,8 +18,8 @@ export function EntryTabs({
       <button
         className={
           activeTab === "movie"
-            ? "rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
-            : "rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+            ? "cursor-pointer rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
+            : "cursor-pointer rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
         }
         onClick={() => onTabChange("movie")}
       >
@@ -29,8 +29,8 @@ export function EntryTabs({
       <button
         className={
           activeTab === "series"
-            ? "rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
-            : "rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
+            ? "cursor-pointer rounded-full bg-[var(--button-color)] px-5 py-3 font-black text-white transition"
+            : "cursor-pointer rounded-full bg-transparent px-5 py-3 font-black text-[var(--text-color)] transition hover:bg-[color-mix(in_srgb,var(--outline-color)_18%,transparent)]"
         }
         onClick={() => onTabChange("series")}
       >
